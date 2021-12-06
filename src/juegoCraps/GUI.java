@@ -2,6 +2,8 @@ package juegoCraps;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class is used as view craps class.
@@ -10,7 +12,7 @@ import java.awt.*;
  */
 public class GUI extends JFrame
 {
-    private static final String MESAJE_INICIO="";
+    private static final String MESAJE_INICIO="BLABLABLA";
 
     private Header headerProject;
     private JLabel dado1, dado2;
@@ -18,6 +20,8 @@ public class GUI extends JFrame
     private JPanel panelDados, panelResultados;
     private ImageIcon imagenDado;
     private JTextArea resultados;
+    private Escucha escucha;
+    private ModelCraps game;
 
     /**
      * Constructor of GUI class
@@ -28,8 +32,8 @@ public class GUI extends JFrame
 
         //Default JFrame configuration
         this.setTitle("Craps Game");
-        //this.setSize(200,100); //especifica el area de la pestaña
-        this.pack(); //el area de la pestaña se adapta
+        //this.setSize(200,100); //set the window size
+        this.pack(); //flexible window
         this.setResizable(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -44,7 +48,8 @@ public class GUI extends JFrame
     {
         //Set up JFrame Container's Layout
         //Create Listener Object and Control Object
-
+        escucha = new Escucha();
+        game = new ModelCraps();
         //Set up JComponents
         headerProject = new Header("Tablero de Juego", Color.BLACK);
         this.add(headerProject,BorderLayout.NORTH); //Change this line if you change JFrame Container's Layout
@@ -54,6 +59,7 @@ public class GUI extends JFrame
         dado2 = new JLabel(imagenDado);
 
         lanzar = new JButton("Lanzar");
+        lanzar.addActionListener(escucha);
 
         panelDados = new JPanel();
         panelDados.setPreferredSize(new Dimension(300,180));
@@ -77,8 +83,10 @@ public class GUI extends JFrame
      * @param args Object used in order to send input data from command line when
      *             the program is execute by console.
      */
-    public static void main(String[] args){
-        EventQueue.invokeLater(() -> {
+    public static void main(String[] args)
+    {
+        EventQueue.invokeLater(() ->
+        {
             GUI miProjectGUI = new GUI();
         });
     }
@@ -86,7 +94,21 @@ public class GUI extends JFrame
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha {
+    private class Escucha implements ActionListener
+    {
+        private int[] caras;
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            game.calculateShot();
+            caras = game.getCaras();
+            imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[0]+".png"));
+            dado1.setIcon(imagenDado);
+            imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[2]+".png"));
+            dado2.setIcon(imagenDado);
 
+            game.determinateGame();
+            resultados.setText(game.getEstadoMessage());
+        }
     }
 }
