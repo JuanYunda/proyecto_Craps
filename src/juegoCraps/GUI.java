@@ -19,7 +19,8 @@ public class GUI extends JFrame
     private JButton lanzar;
     private JPanel panelDados, panelResultados;
     private ImageIcon imagenDado;
-    private JTextArea resultados;
+    private JTextArea resultadosDados, mensajeSalida;
+    private JSeparator separador;
     private Escucha escucha;
     private ModelCraps game;
 
@@ -38,6 +39,7 @@ public class GUI extends JFrame
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBackground(Color.white);
     }
 
     /**
@@ -51,7 +53,7 @@ public class GUI extends JFrame
         escucha = new Escucha();
         game = new ModelCraps();
         //Set up JComponents
-        headerProject = new Header("Tablero de Juego", Color.BLACK);
+        headerProject = new Header("Tablero de Juego", Color.pink);
         this.add(headerProject,BorderLayout.NORTH); //Change this line if you change JFrame Container's Layout
 
         imagenDado = new ImageIcon(getClass().getResource("/resources/dado.png"));
@@ -70,12 +72,22 @@ public class GUI extends JFrame
 
         this.add(panelDados,BorderLayout.CENTER);
 
-        resultados = new JTextArea(7,31);
-        resultados.setText(MESAJE_INICIO);
-        resultados.setBorder(BorderFactory.createTitledBorder("¿Que debes hacer?"));
-        JScrollPane scroll = new JScrollPane(resultados);
-        this.add(scroll,BorderLayout.EAST);
+        mensajeSalida = new JTextArea(7,31);
+        mensajeSalida.setText(MESAJE_INICIO);
+        //mensajeSalida.setBorder(BorderFactory.createTitledBorder("¿Que debes hacer?"));
+        JScrollPane scroll = new JScrollPane(mensajeSalida);
 
+        panelResultados = new JPanel();
+        panelResultados.setBorder(BorderFactory.createTitledBorder("¿Que debes hacer?"));
+        panelResultados.add(scroll);
+        panelResultados.setPreferredSize(new Dimension(370,180));
+
+        this.add(panelResultados,BorderLayout.EAST);
+
+        resultadosDados = new JTextArea(4,31);
+        separador = new JSeparator();
+        separador.setPreferredSize(new Dimension(320,5));
+        separador.setBackground(Color.pink);
     }
 
     /**
@@ -108,7 +120,17 @@ public class GUI extends JFrame
             dado2.setIcon(imagenDado);
 
             game.determinateGame();
-            resultados.setText(game.getEstadoMessage());
+
+            panelResultados.removeAll();
+            panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+            panelResultados.add(panelDados);
+            panelResultados.add(separador);
+            panelResultados.add(mensajeSalida);
+            resultadosDados.setText(game.getEstadoMessage()[0]);
+            mensajeSalida.setRows(4);
+            mensajeSalida.setText(game.getEstadoMessage()[1]);
+            revalidate();
+            repaint();
         }
     }
 }

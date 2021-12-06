@@ -7,6 +7,7 @@ package juegoCraps;
  * estado = 3 Set point.
  * estado = 4 Point Round Win
  * estado = 5 Point Round Lose
+ * estado = 6 Keep rolling
  * @author Juan E. Mazuera Yunda
  * @version V.1.0.0 date 30/11/2021
  */
@@ -14,7 +15,7 @@ public class ModelCraps
 {
     private Dado dado1, dado2;
     private int tiro, punto, estado, flag;
-    private String estadoMessage;
+    private String[] estadoMessage;
     private int[] caras;
 
     public ModelCraps()
@@ -22,6 +23,7 @@ public class ModelCraps
         dado1 = new Dado();
         dado2 = new Dado();
         caras = new int[2]; //Create 2 positions array.
+        estadoMessage = new String[2];
         flag = 0; //First Round
     }
 
@@ -72,6 +74,7 @@ public class ModelCraps
      * Set the game state according estado atribute value.
      * estado = 4 Point Round Win
      * estado = 5 Point Round Lose
+     * estado = 6 Keep rolling
      */
     private void pointRound()
     {
@@ -87,6 +90,10 @@ public class ModelCraps
             {
                 estado = 5; //u lose in point round
                 flag = 0;
+            }
+            else
+            {
+                estado = 6; //keep rolling
             }
         }
     }
@@ -107,21 +114,29 @@ public class ModelCraps
      * Set a message that say the game state according estado atribute value.
      * @return Message for the View class.
      */
-    public String getEstadoMessage()
+    public String[] getEstadoMessage()
     {
         switch(estado)
         {
-            case 1: estadoMessage="¡¡Has Ganado por Natural!!";
-                break;
-            case 2: estadoMessage="Has Perdido por Craps. Intentalo de nuevo.";
-                break;
-            case 3: estadoMessage="¡Has asigando el punto en "+punto+"! Debes seguir lanzando.\n"+
+            case 1: estadoMessage[0]="Tiro de salida = "+tiro;
+                    estadoMessage[1]="¡¡Has Ganado por Natural!!";
+                    break;
+            case 2: estadoMessage[0]="Tiro de salida = "+tiro;
+                    estadoMessage[1]="Has Perdido por Craps. Intentalo de nuevo.";
+                    break;
+            case 3: estadoMessage[0]="Tiro de salida = "+tiro+"\nPunto = "+punto;
+                    estadoMessage[1]="¡Has asigando el punto en "+punto+"! Debes seguir lanzando.\n"+
                     "Ahora si sacas 7 antes que "+punto+" perderás, pero si sacas "+punto+" ganarás";
-                break;
-            case 4: estadoMessage="Volviste a sacar "+punto+". ¡¡Has ganado!!";
-                break;
-            case 5: estadoMessage="Sacaste 7 antes que "+punto+". Has perdido.";
-                break;
+                    break;
+            case 4: estadoMessage[0]="Tiro de salida = "+punto+"\nPunto = "+punto+"\nValor del último tiro = "+tiro;
+                    estadoMessage[1]="Volviste a sacar "+punto+". ¡¡Has ganado!!";
+                    break;
+            case 5: estadoMessage[0]="Tiro de salida = "+punto+"\nPunto = "+punto+"\nValor del último tiro = "+tiro;
+                    estadoMessage[1]="Sacaste 7 antes que "+punto+". Has perdido.";
+                    break;
+            case 6: estadoMessage[0]="Tiro de salida = "+punto+"\nPunto = "+punto+"\nValor del último tiro = "+tiro;
+                    estadoMessage[1]="¡Debes seguir lanzando!\nPero si sacas 7 antes que "+punto+" perderás y si sacas "+punto+" ganarás!!";
+                    break;
         }
         return estadoMessage;
     }
