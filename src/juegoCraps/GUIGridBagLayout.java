@@ -32,6 +32,8 @@ public class GUIGridBagLayout extends JFrame
         //Default JFrame configuration
         this.setTitle("Craps Game");
         //this.setSize(200,100); //set the window size
+        this.setUndecorated(true); //this line need be written before set window's size
+        this.setBackground(Color.pink);
         this.pack(); //flexible window
         this.setResizable(true);
         this.setVisible(true);
@@ -49,7 +51,7 @@ public class GUIGridBagLayout extends JFrame
         escucha = new Escucha();
         game = new ModelCraps();
         //Set up JComponents
-        headerProject = new Header("Tablero de Juego", Color.pink);
+        headerProject = new Header("Tablero de Juego", Color.darkGray);
         constraints.gridx=0;
         constraints.gridy=0;
         constraints.gridwidth=2;
@@ -58,7 +60,8 @@ public class GUIGridBagLayout extends JFrame
 
         ayuda = new JButton("?");
         ayuda.addActionListener(escucha);
-        ayuda.setBackground(Color.pink);
+        ayuda.setBackground(Color.gray);
+        ayuda.setForeground(Color.WHITE);
         constraints.gridx=0;
         constraints.gridy=1;
         constraints.gridwidth=1;
@@ -68,7 +71,8 @@ public class GUIGridBagLayout extends JFrame
 
         salir = new JButton("salir");
         salir.addActionListener(escucha);
-        salir.setBackground(Color.pink);
+        salir.setBackground(Color.gray);
+        salir.setForeground(Color.WHITE);
         constraints.gridx=1;
         constraints.gridy=1;
         constraints.gridwidth=1;
@@ -96,6 +100,7 @@ public class GUIGridBagLayout extends JFrame
         resultadosDados.setBorder(BorderFactory.createTitledBorder("Resultados"));
         resultadosDados.setText("Lanza los dados");
         resultadosDados.setBackground(null);
+        resultadosDados.setEditable(false);
         constraints.gridx=1;
         constraints.gridy=2;
         constraints.gridwidth=1;
@@ -106,6 +111,7 @@ public class GUIGridBagLayout extends JFrame
         lanzar = new JButton("Lanzar");
         lanzar.addActionListener(escucha);
         lanzar.setBackground(Color.pink);
+        lanzar.setForeground(Color.WHITE);
         constraints.gridx=0;
         constraints.gridy=3;
         constraints.gridwidth=2;
@@ -119,6 +125,7 @@ public class GUIGridBagLayout extends JFrame
         mensajeSalida.setBorder(BorderFactory.createTitledBorder("Juego"));
         mensajeSalida.setFont(new Font(Font.DIALOG,Font.BOLD,10));
         mensajeSalida.setAlignmentX(this.CENTER_ALIGNMENT);
+        mensajeSalida.setEditable(false);
         constraints.gridx=0;
         constraints.gridy=4;
         constraints.gridwidth=2;
