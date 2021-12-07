@@ -7,6 +7,15 @@ import java.awt.event.ActionListener;
 
 public class GUIGridBagLayout extends JFrame
 {
+    private static final String MESAJE_INICIO="Bienvenido a Craps \n"+
+            "Oprime el botón -Lanzar- para iniciar el juego\n"+
+            "Si su tiro de salida es 7 u 11 ganas con -Natural-\n"+
+            "Si tu tiro de salida es 2, 3 o 12 pierdes con Craps\n"+
+            "Si sacas cualquier otro valor estableceras un punto\n"+
+            "Estando en punto podrás seguir lanzando los dados\n"+
+            "pero ahora ganarás si sacas nuevamente el valor del punto\n"+
+            "establecido sin que previamente hayas sacado 7";
+
     private Header headerProject;
     private JLabel dado1, dado2;
     private JButton lanzar, ayuda, salir;
@@ -87,7 +96,6 @@ public class GUIGridBagLayout extends JFrame
         resultadosDados.setBorder(BorderFactory.createTitledBorder("Resultados"));
         resultadosDados.setText("Lanza los dados");
         resultadosDados.setBackground(null);
-        resultadosDados.setFont(new Font(Font.DIALOG,Font.BOLD,10));
         constraints.gridx=1;
         constraints.gridy=2;
         constraints.gridwidth=1;
@@ -135,7 +143,28 @@ public class GUIGridBagLayout extends JFrame
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            if(e.getSource()==lanzar)
+            {
+                game.calculateShot();
+                caras = game.getCaras();
+                imagenDado = new ImageIcon(getClass().getResource("/resources/" + caras[0] + ".png"));
+                dado1.setIcon(imagenDado);
+                imagenDado = new ImageIcon(getClass().getResource("/resources/" + caras[1] + ".png"));
+                dado2.setIcon(imagenDado);
 
+                game.determinateGame();
+
+                resultadosDados.setText(game.getEstadoMessage()[0]);
+                mensajeSalida.setText(game.getEstadoMessage()[1]);
+            }
+            else if(e.getSource()==ayuda)
+            {
+            JOptionPane.showMessageDialog(null,MESAJE_INICIO);
+            }
+            else
+            {
+                System.exit(0);
+            }
         }
     }
 }
