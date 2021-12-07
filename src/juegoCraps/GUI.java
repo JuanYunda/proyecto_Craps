@@ -12,7 +12,14 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame
 {
-    private static final String MESAJE_INICIO="BLABLABLA";
+    private static final String MESAJE_INICIO="Bienvenido a Craps \n"+
+                                "Oprime el botón -Lanzar- para iniciar el juego\n"+
+                                "Si su tiro de salida es 7 u 11 ganas con -Natural-\n"+
+                                "Si tu tiro de salida es 2, 3 o 12 pierdes con Craps\n"+
+                                "Si sacas cualquier otro valor estableceras un punto\n"+
+                                "Estando en punto podrás seguir lanzando los dados\n"+
+                                "pero ahora ganarás si sacas nuevamente el valor del punto\n"+
+                                "establecido sin que previamente hayas sacado 7";
 
     private Header headerProject;
     private JLabel dado1, dado2;
@@ -86,7 +93,7 @@ public class GUI extends JFrame
 
         resultadosDados = new JTextArea(4,31);
         separador = new JSeparator();
-        separador.setPreferredSize(new Dimension(320,5));
+        separador.setPreferredSize(new Dimension(320,10));
         separador.setBackground(Color.pink);
     }
 
@@ -116,19 +123,19 @@ public class GUI extends JFrame
             caras = game.getCaras();
             imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[0]+".png"));
             dado1.setIcon(imagenDado);
-            imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[2]+".png"));
+            imagenDado = new ImageIcon(getClass().getResource("/resources/"+caras[1]+".png"));
             dado2.setIcon(imagenDado);
 
             game.determinateGame();
 
             panelResultados.removeAll();
             panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
-            panelResultados.add(panelDados);
-            panelResultados.add(separador);
-            panelResultados.add(mensajeSalida);
             resultadosDados.setText(game.getEstadoMessage()[0]);
             mensajeSalida.setRows(4);
             mensajeSalida.setText(game.getEstadoMessage()[1]);
+            panelResultados.add(resultadosDados);
+            panelResultados.add(separador);
+            panelResultados.add(mensajeSalida);
             revalidate();
             repaint();
         }
