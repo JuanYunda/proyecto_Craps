@@ -72,6 +72,7 @@ public class GUI extends JFrame
         panelDados = new JPanel();
         panelDados.setPreferredSize(new Dimension(300,180));
         panelDados.setBorder(BorderFactory.createTitledBorder("Tus Dados"));
+        panelDados.setBackground(null);
         panelDados.add(dado1);
         panelDados.add(dado2);
         panelDados.add(lanzar);
