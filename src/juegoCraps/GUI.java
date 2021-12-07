@@ -46,7 +46,6 @@ public class GUI extends JFrame
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBackground(Color.white);
     }
 
     /**
@@ -79,8 +78,9 @@ public class GUI extends JFrame
 
         this.add(panelDados,BorderLayout.CENTER);
 
-        mensajeSalida = new JTextArea(7,31);
+        mensajeSalida = new JTextArea(8,31);
         mensajeSalida.setText(MESAJE_INICIO);
+        mensajeSalida.setBackground(null);
         //mensajeSalida.setBorder(BorderFactory.createTitledBorder("¿Que debes hacer?"));
         JScrollPane scroll = new JScrollPane(mensajeSalida);
 
@@ -131,8 +131,10 @@ public class GUI extends JFrame
             panelResultados.removeAll();
             panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
             resultadosDados.setText(game.getEstadoMessage()[0]);
+            resultadosDados.setBackground(null);
             mensajeSalida.setRows(4);
             mensajeSalida.setText(game.getEstadoMessage()[1]);
+            mensajeSalida.setFont(new Font(Font.DIALOG,Font.BOLD,11));
             panelResultados.add(resultadosDados);
             panelResultados.add(separador);
             panelResultados.add(mensajeSalida);
